@@ -5,6 +5,7 @@ class Post(models.Model):
     content = models.TextField()
     author = models.CharField(max_length=255)
     status = models.BooleanField(default=False)
+    image = models.ImageField(upload_to='blog/',default='blog/default.jpg')
     counted_view = models.IntegerField(default=0)
     published_date = models.DateField(null=True)
     created_date = models.DateTimeField(auto_now_add=True)
@@ -14,7 +15,7 @@ class Post(models.Model):
     def __str__(self):
         return self.title
    
-   # image = models.ImageField(blank=True ,upload_to='images')
+   # 
     #category 
     #tags
 
