@@ -5,5 +5,11 @@ class Contact(models.Model):
     email = models.EmailField()
     subject = models.CharField(max_length=255)
     message = models.TextField()
+    created_date = models.DateTimeField(null=True , blank=True)
 
+    class Meta():
+        ordering = ['-created_date']
+    
+    def __str__(self):
+        return self.name
 # Create your models here.

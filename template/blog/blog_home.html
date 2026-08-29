@@ -57,7 +57,7 @@
                     </div>
                     <div class="down-content">
                       <span>{{post.id}}</span>
-                      <a href="post-details.html"><h4>{{post.title}}</h4></a>
+                      <a href="{% url 'blog:single' pid=post.id %}"><h4>{{post.title}}</h4></a>
                       <ul class="post-info">
                         <li><a href="#">{{post.author}}</a></li>
                         <li><a href="#">{{post.created_date|date:"d.M.Y"}}</a></li>
@@ -79,12 +79,16 @@
                   </div>
                 </div>
               {% endfor %}
+               <!--Pagination-->
                 <div class="col-lg-12">
                   <ul class="page-numbers">
-                    <li><a href="#">1</a></li>
-                    <li class="active"><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#"><i class="fa fa-angle-double-right"></i></a></li>
+                    {% if posts.has_previous %}
+                      <li><a href="?page={{ posts.previous_page_number }}"><i class="fa fa-angle-double-left"></i></a></li>
+                      {% endif %}
+                      <li class="active"><a href="?page={{ posts.page_number }}">{{ posts.number }} </a></li>
+                      {% if posts.has_next %}
+                        <li><a href="?page={{ posts.next_page_number }}"><i class="fa fa-angle-double-right"></i></a></li>
+                      {% endif %}
                   </ul>
                 </div>
               </div>
@@ -95,8 +99,8 @@
               <div class="row">
                 <div class="col-lg-12">
                   <div class="sidebar-item search">
-                    <form id="search_form" name="gs" method="GET" action="#">
-                      <input type="text" name="q" class="searchText" placeholder="type to search..." autocomplete="on">
+                    <form id="search_form" name="gs" method="GET" action="{% url 'blog:search' %}">
+                      <input type="text" name="s" class="searchText" placeholder="type to search..." autocomplete="on">
                     </form>
                   </div>
                 </div>
@@ -129,14 +133,11 @@
                       <h2>Categories</h2>
                     </div>
                     <div class="content">
+                      {% for object in cats %}
                       <ul>
-                        <li><a href="#">- Nature Lifestyle</a></li>
-                        <li><a href="#">- Awesome Layouts</a></li>
-                        <li><a href="#">- Creative Ideas</a></li>
-                        <li><a href="#">- Responsive Templates</a></li>
-                        <li><a href="#">- HTML5 / CSS3 Templates</a></li>
-                        <li><a href="#">- Creative &amp; Unique</a></li>
+                        <li><a href="{% url 'blog:category' cat=object %}">- {{object.name}}</a></li>
                       </ul>
+                      {% endfor %}
                     </div>
                   </div>
                 </div>
@@ -146,15 +147,11 @@
                       <h2>Tag Clouds</h2>
                     </div>
                     <div class="content">
-                      <ul>
-                        <li><a href="#">Lifestyle</a></li>
-                        <li><a href="#">Creative</a></li>
-                        <li><a href="#">HTML5</a></li>
-                        <li><a href="#">Inspiration</a></li>
-                        <li><a href="#">Motivation</a></li>
-                        <li><a href="#">PSD</a></li>
-                        <li><a href="#">Responsive</a></li>
+                      {% for object in tags %}
+                      <ul >
+                        <li><a href="{% url 'blog:tag' tag=object %}">{{object.name}}</a></li>
                       </ul>
+                      {% endfor %}
                     </div>
                   </div>
                 </div>
