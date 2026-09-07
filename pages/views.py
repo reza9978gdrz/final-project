@@ -1,6 +1,7 @@
-from django.shortcuts import render ,HttpResponse
+from django.shortcuts import render ,HttpResponse , redirect
 from blog.models import Post , Category , Tag
 from .forms import ContactForm
+from django.contrib import messages
 import datetime as dt
 
 def home(request):
@@ -15,9 +16,12 @@ def contact(request):
     if request.method=='POST':
         form = ContactForm(request.POST)
         if form.is_valid():
-            print(form.clean_email)
             form.save()
-            return HttpResponse('done')
+            messages.success(request, "your submit is successfully ")
+            return redirect('pages:contact')
+        else:
+            messages.error(request, 'Invalid form submission.')
+            messages.error(request, form.errors)
     else:
         form = ContactForm()
     context = {'form':form}

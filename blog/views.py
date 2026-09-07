@@ -1,9 +1,10 @@
-from django.shortcuts import render , HttpResponse
+from django.shortcuts import render , HttpResponse , redirect
 from .models import Post , Category , Tag
 import datetime as dt
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from .forms import CommentForm
 from .models import Comment
+from django.contrib import messages
 
 def blog_home(request,cat=None,tag=None):
     posts = Post.objects.filter(status=1 , published_date__lte = dt.date.today())
@@ -37,13 +38,15 @@ def blog_single(request,pid):
     count = count + 1
     post.counted_view = count
     post.save()
-    title = post.title
-    comments = Comment.objects.filter(post=title)
+    comments = Comment.objects.filter(post=post.id , approved=True)
     if request.method=='POST':
         form = CommentForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponse('/')
+            messages.success(request, "your comment successfully submit ,it will be published after investigations")
+        else:
+            messages.error(request, 'Invalid commenting.')
+            messages.error(request, form.errors)
     else:
         form = CommentForm()
     context = {'post':post , 'form':form ,'comments':comments}
