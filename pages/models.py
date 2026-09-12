@@ -5,7 +5,7 @@ class Contact(models.Model):
     email = models.EmailField()
     subject = models.CharField(max_length=255)
     message = models.TextField()
-    created_date = models.DateTimeField(null=True , blank=True)
+    created_date = models.DateTimeField(null=True , blank=True ,auto_now_add=True)
 
     class Meta():
         ordering = ['-created_date']

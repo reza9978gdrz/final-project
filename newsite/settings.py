@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 from django.contrib.messages import constants as messages
-
+from decouple import config ,Config , RepositoryEnv
 
 
 MESSAGE_TAGS = {
@@ -48,11 +48,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sitemaps',
+    'django.contrib.sites',
 
+    'captcha',
     'pages',
     'blog',
     'accounts',
 ]
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -146,3 +150,19 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #message
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+
+#Authentications
+AUTHENTICATION_BACKENDS = (
+    'accounts.forms.UsernameOrEmail', 
+)
+
+#################################################################################
+config = Config(RepositoryEnv(BASE_DIR / 'environment.env'))
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

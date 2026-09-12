@@ -1,11 +1,13 @@
 from pages.models import Contact
 from django import forms
+from captcha.fields import CaptchaField
 
 class ContactForm(forms.ModelForm):
 
+    captcha = CaptchaField()
     class Meta:
         model = Contact
-        fields = ['name','email','subject','message']
+        fields = ['name','email','subject','message','captcha']
     
     def clean_email(self):
         email = self.cleaned_data.get('email')

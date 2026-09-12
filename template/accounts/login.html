@@ -32,8 +32,8 @@
 	
 	<div class="limiter">
 		<div class="container-login100" style="background: rgb(0, 255, 200);">
-			<span>{% include 'message.html' %}</span>
 			<div class="wrap-login100 p-t-30 p-b-50">
+				<span>{% include 'message.html' %}</span>
 				<span class="login100-form-title p-b-41">
 					Account Login
 				</span>
@@ -54,7 +54,7 @@
 						<button class="login100-form-btn">
 							Login
 						</button>
-						<a class="forget_form" href="#">
+						<a class="forget_form" href="{% url 'accounts:password_reset' %}">
 							Forgot Password
 						</a>
 					</div>

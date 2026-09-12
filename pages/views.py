@@ -6,7 +6,11 @@ import datetime as dt
 
 def home(request):
     posts = Post.objects.filter(status=1, published_date__lte = dt.date.today())
-    context = {'posts':posts }
+    recent_post = posts.order_by('-created_date')[:3]
+    popular_posts = posts.order_by('created_date')[:6]
+    category = Category.objects.all()
+    tags = Tag.objects.all()
+    context = {'posts':posts ,'category':category , 'tags':tags , 'recent_post':recent_post , 'popular_posts':popular_posts}
     return render(request,'pages/index.html',context)
 
 def about(request):
