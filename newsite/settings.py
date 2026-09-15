@@ -31,17 +31,22 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-4+wb$et15qcgefh1y390@y306gh(j1k))8v*&zxkezg#11gicr'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
 ALLOWED_HOSTS = []
 
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    # other finders..
+    'compressor.finders.CompressorFinder',
+)
 
 # Application definition
 
 INSTALLED_APPS = [
+    'multi_captcha_admin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -50,13 +55,22 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
     'django.contrib.sites',
+    'django.contrib.humanize',
+    'django_extensions',
+    'taggit',
 
+    'compressor',
+    'robots',
     'captcha',
     'pages',
     'blog',
     'accounts',
 ]
-SITE_ID = 1
+
+MULTI_CAPTCHA_ADMIN = {
+    'engine': 'simple-captcha',
+}
+SITE_ID = 2
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -96,11 +110,15 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'final project',
         'USER': 'postgres',
-        'PASSWORD': '70507050rg',
+        'PASSWORD': config('DB_PASSWORD'),
         'HOST': 'localhost',
         'PORT': '5432',
     }
 }
+
+#host
+ROBOTS_USE_HOST = False
+ROBOTS_USE_SITEMAP = False
 
 
 # Password validation
@@ -156,13 +174,15 @@ AUTHENTICATION_BACKENDS = (
     'accounts.forms.UsernameOrEmail', 
 )
 
-#################################################################################
-config = Config(RepositoryEnv(BASE_DIR / 'environment.env'))
+
+#emailbackend
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
-
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+#maintenancemood
+MAINTENANCE_MOOD =False

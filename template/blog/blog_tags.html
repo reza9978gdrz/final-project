@@ -1,0 +1,14 @@
+<div class="col-lg-12">
+    <div class="sidebar-item tags">
+      <div class="sidebar-heading">
+        <h2>Tag Clouds</h2>
+      </div>
+      <div class="content">
+        {% for object in post.tag.all %}
+        <ul>
+          <li><a href="{% url 'blog:tag' tag=object %}">{{object.name}}</a></li>
+        </ul>
+        {% endfor %}
+      </div>
+    </div>
+  </div>

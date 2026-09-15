@@ -7,7 +7,7 @@ urlpatterns = [
     path("signup/", signup, name="signup"),
     path("login/", login_page , name ="login"),
     path("logout/", logout_page , name ="logout"),
-     path('password-reset/',
+    path('password-reset/',
          CustomPasswordResetView.as_view(
              template_name='registration/password_reset_form.html'
          ),

@@ -1,16 +1,14 @@
 from django.shortcuts import render ,HttpResponse , redirect
-from blog.models import Post , Category , Tag
+from blog.models import Post , Category 
 from .forms import ContactForm
 from django.contrib import messages
 import datetime as dt
 
 def home(request):
     posts = Post.objects.filter(status=1, published_date__lte = dt.date.today())
-    recent_post = posts.order_by('-created_date')[:3]
     popular_posts = posts.order_by('created_date')[:6]
     category = Category.objects.all()
-    tags = Tag.objects.all()
-    context = {'posts':posts ,'category':category , 'tags':tags , 'recent_post':recent_post , 'popular_posts':popular_posts}
+    context = {'posts':posts ,'category':category  , 'popular_posts':popular_posts}
     return render(request,'pages/index.html',context)
 
 def about(request):

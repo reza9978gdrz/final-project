@@ -1,0 +1,23 @@
+{
+    "platform":"django",
+    "django":{
+        "pythonVersion":"3.11.9",
+        "collectstatic":true,
+        "compileMessages":false,
+        "modifySettings":true,
+        "timezon":"Asia/Tehran"
+    },
+    "app":"therezagdrz",
+    "disk":[
+        {
+            "name":"static",
+            "mountTo":"static"
+
+        },
+        {
+            "name":"media",
+            "mountTo":"media"
+        }
+    ]
+    
+}

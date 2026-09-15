@@ -1,5 +1,7 @@
 {% extends 'pages/base.html' %}
 {% load static %}
+{% load blog_tags %}
+{% load humanize %}
 {% block content %}
 
     <!-- Page Content -->
@@ -60,9 +62,9 @@
                       <a href="{% url 'blog:single' pid=post.id %}"><h4>{{post.title}}</h4></a>
                       <ul class="post-info">
                         <li><a href="#">{{post.author}}</a></li>
-                        <li><a href="#">{{post.created_date}}</a></li>
-                        <li><a href="#">10 Comments</a></li>
-                        <li><a href="#">views {{post.counted_view}}</a></li>
+                        <li><a href="#">{{post.created_date|date:"d.M.Y"}}</a></li>
+                        <li><a href="#">{% comment_number pid=post.id %} Comments</a></li>
+                        <li><a href="#">views {{post.counted_view|apnumber}}</a></li>
                       </ul>
                       <p>{{post.content}}</p>
                      <div class="post-options">
@@ -86,6 +88,40 @@
                     </div>
                   </div>
                 </div>
+                <div class="navigation-area">
+                  <div class="row">
+                    <div class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
+                      <div class="thumb">
+                        {% if prev_post %}
+                        <a href="{% url 'blog:single' pid=prev_post.id %}"><img class="img-fluid" src="{{prev_post.image.url}}" alt=""></a>
+                      </div>
+                      <div class="arrow">
+                        <a href="{% url 'blog:single' pid=prev_post.id %}"><span class="lnr text-white lnr-arrow-left"></span></a>
+                      </div>
+                      <div class="detials">
+                      
+                        <p>Prev Post</p>
+                        <a href="{% url 'blog:single' pid=prev_post.id %}"><h4>{{prev_post.title}}</h4></a>
+                      {% endif %}
+                      </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
+                      <div class="detials">
+                        {% if next_post %}
+                        <p>Next Post</p>
+                        <a href="{% url 'blog:single' pid=next_post.id %}"><h4>{{next_post.title}}</h4></a>
+                        
+                      </div>
+                      <div class="arrow">
+                        <a href="#"><span class="lnr text-white lnr-arrow-right"></span></a>
+                      </div>
+                      <div class="thumb">
+                        <a href="{% url 'blog:single' pid=next_post.id %}"><img class="img-fluid" src="{{next_post.image.url}}" alt=""></a>
+                      </div>
+                      {% endif %}										
+                    </div>									
+                  </div>
+                </div>
                 <div class="col-lg-12">
                   <div class="sidebar-item comments">
                     <div class="sidebar-heading">
@@ -100,7 +136,7 @@
                             <img src="{% static 'images/comment-author-01.jpg' %}" alt="">
                           </div>
                           <div class="right-content">
-                            <h4>{{comment.name}}<span>{{comment.created_date}}</span></h4>
+                            <h4>{{comment.name}}<span>{{comment.created_date|naturaltime}}</span></h4>
                             <p>{{comment.message}}</p>
                           </div>
                         </li>
@@ -162,55 +198,9 @@
                     </form>
                   </div>
                 </div>
-                <div class="col-lg-12">
-                  <div class="sidebar-item recent-posts">
-                    <div class="sidebar-heading">
-                      <h2>Recent Posts</h2>
-                    </div>
-                    <div class="content">
-                      <ul>
-                        <li><a href="post-details.html">
-                          <h5>Vestibulum id turpis porttitor sapien facilisis scelerisque</h5>
-                          <span>May 31, 2020</span>
-                        </a></li>
-                        <li><a href="post-details.html">
-                          <h5>Suspendisse et metus nec libero ultrices varius eget in risus</h5>
-                          <span>May 28, 2020</span>
-                        </a></li>
-                        <li><a href="post-details.html">
-                          <h5>Swag hella echo park leggings, shaman cornhole ethical coloring</h5>
-                          <span>May 14, 2020</span>
-                        </a></li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-12">
-                  <div class="sidebar-item categories">
-                    <div class="sidebar-heading">
-                      <h2>Category</h2>
-                    </div>
-                    <div class="content">
-                      <ul>
-                        <li><a href="#">- {{post.category}}</a></li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-12">
-                  <div class="sidebar-item tags">
-                    <div class="sidebar-heading">
-                      <h2>Tag Clouds</h2>
-                    </div>
-                    <div class="content">
-                      {% for tag in post.tag.all %}
-                      <ul>
-                        <li><a href="#">{{tag.name}}</a></li>
-                      </ul>
-                      {% endfor %}
-                    </div>
-                  </div>
-                </div>
+                {% recent_posts %}
+                {% categories %}
+               {% include 'blog/blog_tags.html' %}
               </div>
             </div>
           </div>

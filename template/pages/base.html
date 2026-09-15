@@ -1,4 +1,4 @@
-{% load static %}
+{% load compress static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,6 +13,7 @@
     <title>final project</title>
 
     <!-- Bootstrap core CSS -->
+    {% compress css%}
     <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
 
 
@@ -20,6 +21,7 @@
     <link rel="stylesheet" href="{% static 'css/fontawesome.css' %}">
     <link rel="stylesheet" href="{% static 'css/templatemo-stand-blog.css' %}">
     <link rel="stylesheet" href="{% static 'css/owl.css' %}">
+    {% endcompress %}
 <!--
 
 TemplateMo 551 Stand Blog
@@ -114,6 +116,7 @@ https://templatemo.com/tm-551-stand-blog
   </footer>
 
   <!-- Bootstrap core JavaScript -->
+  {% compress js%}
   <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
   <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
@@ -123,7 +126,7 @@ https://templatemo.com/tm-551-stand-blog
   <script src="{% static 'js/slick.js' %}"></script>
   <script src="{% static 'js/isotope.js' %}"></script>
   <script src="{% static 'js/accordions.js' %}"></script>
-
+  {% endcompress %}
   <script language = "text/Javascript"> 
     cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
     function clearField(t){                   //declaring the array outside of the

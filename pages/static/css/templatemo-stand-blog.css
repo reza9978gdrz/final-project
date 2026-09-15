@@ -274,7 +274,18 @@ header .navbar {
 
 .owl-banner .item {
 	position: relative;
-}
+	height: 500px;
+	overflow: hidden;
+  }
+  
+  .owl-banner .img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	position: absolute;
+	top: 0;
+	left: 0;
+  }
 
 .owl-banner .item .item-content {
 	position: absolute;
@@ -1117,3 +1128,49 @@ footer p a:hover {
 .messages li.error {
     background-color: #ffe3e3;
 }
+
+.navigation-area .thumb {
+	width:200px ;
+	height: 80px;
+	flex-shrink: 0;
+	overflow: hidden;
+	border-radius: 8px;
+  }
+  
+  .navigation-area .thumb img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+  }
+  
+  .navigation-area .nav-left,
+  .navigation-area .nav-right {
+	gap: 15px;
+  }
+  
+  .navigation-area .detials {
+	max-width: 180px;
+  }
+  
+  .navigation-area .detials h4 {
+	font-size: 16px;
+	margin: 5px 0 0;
+	line-height: 1.3;
+  }
+  
+  .navigation-area .arrow {
+	width: 30px;
+	text-align: center;
+  }
+  
+  .navigation-area .row {
+	margin-left: 0;
+	margin-right: 0;
+  }
+  .navigation-area .nav-left {
+	padding-left: 0;
+  }
+  
+  .navigation-area .nav-right {
+	padding-right: 0;
+  }

@@ -1,12 +1,8 @@
 from django.db import models
 from django.urls import reverse
+from taggit.managers import TaggableManager
 
 
-class Tag(models.Model):
-    name = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.name
 
 class Category(models.Model):
     name = models.CharField(max_length=255)
@@ -21,7 +17,7 @@ class Post(models.Model):
     status = models.BooleanField(default=False)
     image = models.ImageField(upload_to='blog/',default='blog/default.jpg')
     category = models.ForeignKey(Category ,on_delete=models.CASCADE , null=True)
-    tag = models.ManyToManyField(Tag , null=True )
+    tag = TaggableManager()
     counted_view = models.IntegerField(default=0)
     published_date = models.DateTimeField(null=True)
     created_date = models.DateTimeField(auto_now_add=True)
